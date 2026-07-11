@@ -1,0 +1,276 @@
+/* ---------- Tokens ---------- */
+:root {
+  --color-bg: #9CAD3D;
+  --color-bg-deep: #83942F;
+  --color-text: #FFFFFF;
+  --color-accent-orange: #CF4421;
+  --color-accent-blue: #B5C8EB;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --max-width: 46rem;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.75rem;
+  --space-4: 3rem;
+  --space-5: 5rem;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  font-size: 1.0625rem;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  background: var(--color-accent-orange);
+  color: var(--color-text);
+  padding: var(--space-1) var(--space-2);
+  z-index: 100;
+}
+.skip-link:focus {
+  left: var(--space-2);
+  top: var(--space-2);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 3px;
+}
+
+/* ---------- Header / wordmark ---------- */
+.site-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.site-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-3) var(--space-2);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  text-decoration: none;
+  color: var(--color-text);
+  letter-spacing: 0.01em;
+}
+.wordmark__amp {
+  font-style: italic;
+  color: var(--color-accent-orange);
+  padding: 0 0.08em;
+}
+
+/* ---------- Nav toggle (mobile only) ---------- */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.nav-toggle__icon {
+  width: 16px;
+  height: 11px;
+  position: relative;
+  display: inline-block;
+}
+.nav-toggle__icon::before,
+.nav-toggle__icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  transition: transform 0.2s ease;
+}
+.nav-toggle__icon::before { top: 0; }
+.nav-toggle__icon::after { bottom: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon::before {
+  transform: translateY(4.5px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon::after {
+  transform: translateY(-4.5px) rotate(-45deg);
+}
+
+/* ---------- Nav (desktop: horizontal) ---------- */
+.site-nav {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-3) var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+.site-nav a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  border-bottom-color: var(--color-accent-blue);
+}
+.site-nav a[aria-current="page"] {
+  border-bottom-color: var(--color-accent-orange);
+}
+
+/* ---------- Nav (mobile: dropdown) ---------- */
+@media (max-width: 640px) {
+  .nav-toggle { display: inline-flex; }
+
+  .site-nav {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+  .site-nav.is-open {
+    max-height: 30rem;
+  }
+  .site-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0 var(--space-3) var(--space-2);
+  }
+  .site-nav li {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .site-nav a {
+    display: block;
+    padding: var(--space-2) 0;
+    border-bottom: none;
+  }
+  .site-nav a[aria-current="page"] {
+    color: var(--color-accent-orange);
+  }
+}
+
+/* ---------- Main content ---------- */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-3) var(--space-4);
+}
+
+main h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  line-height: 1.15;
+  margin: 0 0 var(--space-3);
+}
+main h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+  margin: var(--space-4) 0 var(--space-2);
+}
+main p { margin: 0 0 var(--space-2); }
+main a {
+  color: var(--color-accent-orange);
+  text-decoration-color: var(--color-accent-blue);
+}
+
+main ul, main ol {
+  margin: 0 0 var(--space-2);
+  padding-left: 1.25rem;
+}
+
+.divider {
+  border: none;
+  border-top: 2px solid var(--color-accent-blue);
+  width: 3rem;
+  margin: var(--space-4) 0;
+}
+
+/* Info panel — used for logistics: venue address, deadlines, etc. */
+.panel {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid var(--color-accent-blue);
+  padding: var(--space-3);
+  border-radius: 0.25rem;
+  margin: var(--space-3) 0;
+}
+.panel h2 { margin-top: 0; }
+
+.button {
+  display: inline-block;
+  background: var(--color-accent-orange);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: var(--space-2);
+}
+.button:hover,
+.button:focus-visible {
+  background: #b53a1c;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  text-align: center;
+  padding: var(--space-3);
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- Embedded forms (RSVP) ---------- */
+.form-embed {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.form-embed iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 60vh;
+  border: 0;
+}
