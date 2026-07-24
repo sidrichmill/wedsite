@@ -14,7 +14,7 @@ pageStylesheet: /css/our-story.css
 
 ## 2000
 
-    ![Young Devon at the beach](/images/Willard_0075-sq.jpg) ![Young Sid at the beach](/images/2000-sidbeach-sq.jpg)
+    ![Young Devon at the beach](/images/Willard_0075-sq.jpeg) ![Young Sid at the beach](/images/2000-sidbeach-sq.jpeg)
     Devon vacationed at the Delaware beaches in her childhood. We will never know if they crossed paths earlier in life!
 
 ## 2016
