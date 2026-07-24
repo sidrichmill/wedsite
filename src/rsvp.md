@@ -18,12 +18,13 @@ Please respond by **August 1, 2027** so we can finalize catering and seating.
     Replace the src below with your own Google Form's embed URL:
     Google Forms → Send → Embed (<>) → copy the src="..." value.
   -->
-  <iframe
+  <!-- <iframe
     src="https://docs.google.com/forms/d/e/REPLACE_WITH_YOUR_FORM_ID/viewform?embedded=true"
     title="Wedding RSVP form"
     loading="lazy">
     Loading…
-  </iframe>
+  </iframe> -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSehsA9Z-_UoBBeIgchC-Vs_Xux3vgCW2usw5wijZIBu-eFmMg/viewform?embedded=true" width="640" height="759" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 </div>
 
 Trouble with the form? Email us directly and we'll get you added to the list.

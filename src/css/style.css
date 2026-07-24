@@ -28,7 +28,7 @@ body {
   line-height: 1.6;
   font-size: 1.0625rem;
 }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; display: block; margin-bottom: 1rem; }
 a { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -189,7 +189,7 @@ a { color: inherit; }
 main {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space-5) var(--space-3) var(--space-4);
+  padding: var(--space-3) var(--space-3) var(--space-4);
 }
 
 main h1 {
@@ -274,3 +274,53 @@ main ul, main ol {
   min-height: 60vh;
   border: 0;
 }
+
+/* ---------- view transitions ----------
+
+  @view-transition {
+      navigation: auto;
+  }
+
+  ::view-transition-group(page-content) {
+      animation-timing-function: ease-in-out;
+  }
+
+  ::view-transition-old(page-content) {
+      animation-name: slide-out;
+  }
+    ::view-transition-new(page-content) {
+      animation-name: slide-in;
+  }
+
+  @keyframes slide-out {
+     to {
+        translate: -100vw;
+     }
+  }
+  @keyframes slide-in {
+      from {
+          translate: 100vw;
+      }
+  }
+
+  ::view-transition-group(root) {
+  background-color: var(--color-bg);
+}
+
+  main{
+    view-transition-name: page-content;
+  }
+
+  header {
+    view-transition-name: nav;
+  }
+
+  ::view-transition-image-pair(nav) {
+  isolation: isolate;
+}
+
+::view-transition-old(nav),
+::view-transition-new(nav) {
+  animation: none;
+  mix-blend-mode: normal;
+} */
