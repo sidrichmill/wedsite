@@ -16,7 +16,8 @@ h1{
     vertical-align:-1rem;
     line-height: 0;
     position:relative;
-    right: 16px
+    right: 16px;
+  
     /* margin: var(--space-2) 0 var(--space-2); */
     /* color: var(--color-accent-blue); */
 } 
