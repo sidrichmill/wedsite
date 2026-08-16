@@ -1,0 +1,336 @@
+{% set maxAdditionalGuests = 4 %}
+
+<form
+  name="guest-info"
+  method="POST"
+  action="/guest-info/thank-you/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  id="guest-info-form"
+  class="guest-info-form"
+  novalidate
+>
+  <p class="guest-info-form__honeypot" hidden>
+    <label>Leave this field blank: <input name="bot-field"></label>
+  </p>
+  <input type="hidden" name="form-name" value="guest-info">
+
+  <div class="guest-info-form__status" id="guest-info-form-status" role="status" aria-live="polite"></div>
+
+  <fieldset class="guest-info-form__fieldset">
+    <legend>Your Info <span aria-hidden="true">*</span></legend>
+    <div class="guest-info-form__row">
+      <div class="guest-info-form__field">
+        <label for="gif-first-name">First name</label>
+        <input type="text" id="gif-first-name" name="first-name" required autocomplete="given-name">
+      </div>
+      <div class="guest-info-form__field">
+        <label for="gif-last-name">Last name</label>
+        <input type="text" id="gif-last-name" name="last-name" required autocomplete="family-name">
+      </div>
+    </div>
+    <div class="guest-info-form__row">
+      <div class="guest-info-form__field">
+        <label for="gif-email">Email</label>
+        <input type="email" id="gif-email" name="email" required autocomplete="email">
+        <p class="guest-info-form__error" data-error-for="email"></p>
+      </div>
+      <div class="guest-info-form__field">
+        <label for="gif-phone">Phone number</label>
+        <input
+          type="tel" id="gif-phone" name="phone" required autocomplete="tel"
+          pattern="^[0-9+()\-\s]{7,20}$"
+        >
+        <p class="guest-info-form__hint">Digits, spaces, +, -, and ( ) are all fine.</p>
+        <p class="guest-info-form__error" data-error-for="phone"></p>
+      </div>
+    </div>
+    <div class="guest-info-form__field">
+      <label for="gif-birthday">Birthday</label>
+      <input type="date" id="gif-birthday" name="birthday" required autocomplete="bday">
+    </div>
+  </fieldset>
+
+  <div id="guest-info-form-guests">
+    {% for i in range(1, maxAdditionalGuests + 1) %}
+    <fieldset class="guest-info-form__fieldset guest-info-form__guest" data-guest-slot hidden>
+      <legend>Additional Guest {{ i }}</legend>
+      <div class="guest-info-form__row">
+        <div class="guest-info-form__field">
+          <label for="gif-guest-{{ i }}-first">First name</label>
+          <input type="text" id="gif-guest-{{ i }}-first" name="additional-guest-{{ i }}-first-name">
+        </div>
+        <div class="guest-info-form__field">
+          <label for="gif-guest-{{ i }}-last">Last name</label>
+          <input type="text" id="gif-guest-{{ i }}-last" name="additional-guest-{{ i }}-last-name">
+        </div>
+      </div>
+      <div class="guest-info-form__row">
+        <div class="guest-info-form__field">
+          <label for="gif-guest-{{ i }}-email">Email</label>
+          <input type="email" id="gif-guest-{{ i }}-email" name="additional-guest-{{ i }}-email">
+        </div>
+        <div class="guest-info-form__field">
+          <label for="gif-guest-{{ i }}-phone">Phone number</label>
+          <input
+            type="tel" id="gif-guest-{{ i }}-phone" name="additional-guest-{{ i }}-phone"
+            pattern="^[0-9+()\-\s]{7,20}$"
+          >
+        </div>
+      </div>
+      <div class="guest-info-form__field">
+        <label for="gif-guest-{{ i }}-birthday">Birthday</label>
+        <input type="date" id="gif-guest-{{ i }}-birthday" name="additional-guest-{{ i }}-birthday" autocomplete="bday">
+      </div>
+      <button type="button" class="guest-info-form__link-btn" data-remove-guest>Remove this guest</button>
+    </fieldset>
+    {% endfor %}
+  </div>
+
+  <button type="button" id="guest-info-form-add-guest" class="guest-info-form__secondary-btn">+ Add another guest</button>
+
+  <fieldset class="guest-info-form__fieldset">
+    <legend>Mailing Address <span aria-hidden="true">*</span></legend>
+    <div class="guest-info-form__field">
+      <label for="gif-address-street">Street address</label>
+      <input type="text" id="gif-address-street" name="address-street" required autocomplete="street-address">
+    </div>
+    <div class="guest-info-form__row">
+      <div class="guest-info-form__field">
+        <label for="gif-address-city">City</label>
+        <input type="text" id="gif-address-city" name="address-city" required autocomplete="address-level2">
+      </div>
+      <div class="guest-info-form__field guest-info-form__field--small">
+        <label for="gif-address-state">State / Region</label>
+        <input type="text" id="gif-address-state" name="address-state" required autocomplete="address-level1">
+      </div>
+      <div class="guest-info-form__field guest-info-form__field--small">
+        <label for="gif-address-zip">ZIP / Postal code</label>
+        <input
+          type="text" id="gif-address-zip" name="address-zip" required autocomplete="postal-code"
+          pattern="^[A-Za-z0-9\s-]{3,10}$"
+        >
+        <p class="guest-info-form__error" data-error-for="address-zip"></p>
+      </div>
+    </div>
+  </fieldset>
+
+  <button type="submit" class="guest-info-form__submit-btn">Submit</button>
+</form>
+
+<style>
+  .guest-info-form {
+    background: #FFFFFF;
+    color: #23291B;
+    border-radius: 0.75rem;
+    padding: var(--space-4, 2rem) var(--space-3, 1.5rem);
+    max-width: 34rem;
+    margin: 0 auto;
+    font-family: var(--font-body, sans-serif);
+  }
+
+  .guest-info-form__honeypot { position: absolute; left: -9999px; }
+
+  .guest-info-form__status:not(:empty) {
+    background: rgba(181, 200, 235, 0.35);
+    border-left: 4px solid var(--color-accent-blue, #B5C8EB);
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .guest-info-form__field { margin-bottom: 1.25rem; }
+
+  .guest-info-form__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .guest-info-form__row .guest-info-form__field { flex: 1 1 10rem; margin-bottom: 0; }
+  .guest-info-form__row .guest-info-form__field--small { flex: 1 1 7rem; }
+
+  .guest-info-form label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  .guest-info-form input[type="text"],
+  .guest-info-form input[type="email"],
+  .guest-info-form input[type="tel"],
+  .guest-info-form input[type="date"] {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    color: #23291B;
+    background: #F7F8F2;
+    border: 1.5px solid #C9CDBB;
+    border-radius: 0.4rem;
+    padding: 0.6rem 0.75rem;
+  }
+  .guest-info-form input:focus {
+    outline: none;
+    border-color: var(--color-accent-blue, #B5C8EB);
+    box-shadow: 0 0 0 3px rgba(181, 200, 235, 0.5);
+  }
+  .guest-info-form input[aria-invalid="true"] {
+    border-color: var(--color-accent-orange, #CF4421);
+  }
+
+  .guest-info-form__hint {
+    font-size: 0.78rem;
+    color: #5B624D;
+    margin: 0.3rem 0 0;
+  }
+  .guest-info-form__error {
+    font-size: 0.8rem;
+    color: var(--color-accent-orange, #CF4421);
+    margin: 0.3rem 0 0;
+    min-height: 1em;
+  }
+
+  .guest-info-form__fieldset {
+    border: 1px solid #DCDFCF;
+    border-radius: 0.5rem;
+    padding: 1rem 1rem 0.25rem;
+    margin: 0 0 1.25rem;
+  }
+  .guest-info-form__fieldset legend {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0 0.4rem;
+  }
+
+  .guest-info-form__secondary-btn {
+    display: inline-block;
+    background: transparent;
+    border: 1.5px solid var(--color-accent-blue, #B5C8EB);
+    color: #23291B;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+  }
+  .guest-info-form__secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .guest-info-form__link-btn {
+    background: none;
+    border: none;
+    color: var(--color-accent-orange, #CF4421);
+    font: inherit;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0.5rem 0 0.75rem;
+  }
+
+  .guest-info-form__submit-btn {
+    display: block;
+    width: 100%;
+    background: var(--color-accent-orange, #CF4421);
+    color: #FFFFFF;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 999px;
+    padding: 0.85rem;
+    cursor: pointer;
+  }
+  .guest-info-form__submit-btn:hover { background: #B53A1C; }
+</style>
+
+<script>
+(function () {
+  var form = document.getElementById("guest-info-form");
+  if (!form) return;
+
+  var status = document.getElementById("guest-info-form-status");
+  var addBtn = document.getElementById("guest-info-form-add-guest");
+  var guestSlots = Array.prototype.slice.call(form.querySelectorAll("[data-guest-slot]"));
+  var visibleCount = 0;
+
+  function showNextGuest() {
+    var next = guestSlots[visibleCount];
+    if (!next) return;
+    next.hidden = false;
+    visibleCount++;
+    var firstInput = next.querySelector("input");
+    if (firstInput) firstInput.focus();
+    if (visibleCount >= guestSlots.length) {
+      addBtn.disabled = true;
+      addBtn.textContent = "Maximum guests added";
+    }
+  }
+
+  function hideGuest(slot) {
+    slot.querySelectorAll("input").forEach(function (input) { input.value = ""; });
+    slot.hidden = true;
+    visibleCount = Math.max(0, visibleCount - 1);
+    addBtn.disabled = false;
+    addBtn.textContent = "+ Add another guest";
+  }
+
+  addBtn.addEventListener("click", showNextGuest);
+
+  guestSlots.forEach(function (slot) {
+    var removeBtn = slot.querySelector("[data-remove-guest]");
+    removeBtn.addEventListener("click", function () { hideGuest(slot); });
+  });
+
+  function setFieldError(name, message) {
+    var errorEl = form.querySelector('[data-error-for="' + name + '"]');
+    var input = form.elements[name];
+    if (errorEl) errorEl.textContent = message || "";
+    if (input) input.setAttribute("aria-invalid", message ? "true" : "false");
+  }
+
+  function validate() {
+    var valid = form.checkValidity();
+    var fieldsToCheck = form.querySelectorAll('input[type="email"], input[pattern]');
+    fieldsToCheck.forEach(function (input) {
+      setFieldError(input.name, input.validity.valid ? "" : input.validationMessage);
+    });
+    return valid;
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (!validate()) {
+      form.reportValidity();
+      status.textContent = "Please fix the highlighted fields and try again.";
+      return;
+    }
+
+    var data = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(data).toString(),
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Network response was not ok");
+        form.hidden = true;
+        status.textContent = "Thanks! We've got your info and will be in touch soon.";
+      })
+      .catch(function () {
+        // AJAX failed (or JS partially broke) — fall back to a real submission.
+        // .submit() bypasses the 'submit' event, so this can't loop.
+        form.submit();
+      });
+  });
+})();
+</script>
